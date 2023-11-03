@@ -5,6 +5,11 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
+    targetStage:
+      description: '배포 환경'
+      default: master
+
 
 jobs:
   build:
