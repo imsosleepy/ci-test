@@ -23,6 +23,7 @@ jobs:
       - name: 소스코드 빌드
         run: |
           chmod +x gradlew
+          ./gradlew build
 
       - name: 캐시
         uses: actions/cache@v3
@@ -33,9 +34,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: 시크릿이 잘 반영 됐나 확인
-        run: echo "My secret is ${{ secrets.AWS_REGION }}"
 
       - name: AWS Credentials 설정
         uses: aws-actions/configure-aws-credentials@v4
