@@ -25,7 +25,7 @@ jobs:
           chmod +x gradlew
 
       - name: 캐시
-      - uses: actions/cache@v3
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
@@ -33,3 +33,13 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: 시크릿이 잘 반영 됐나 확인
+        run: echo "My secret is ${{ secrets.AWS_REGION }}"
+
+      - name: AWS Credentials 설정
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
