@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.5'
 	id 'io.spring.dependency-management' version '1.1.3'
+	id("com.google.cloud.tools.jib") version "3.4.0"
 }
 
 group = 'com.example'
@@ -20,6 +21,27 @@ configurations {
 repositories {
 	mavenCentral()
 }
+
+jib {
+	from {
+		image = "amazoncorretto:17"
+		platforms {
+			platform {
+				architecture = "amd64"
+				os = "linux"
+			}
+		}
+	}
+	to {
+		image = "197966029048.dkr.ecr.ap-northeast-2.amazonaws.com/prep-backend"
+	}
+	container {
+		jvmFlags = listOf("-XX:+UseContainerSupport", "-Duser.timezone=UTC")
+		ports = listOf("8080")
+		creationTime = "USE_CURRENT_TIMESTAMP"
+	}
+}
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -35,11 +35,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: 소스코드 빌드
-        run: |
-          chmod +x gradlew
-          ./gradlew build
-
       - name: AWS Credentials 설정
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -53,9 +48,8 @@ jobs:
         with:
           registries: 301591718339
 
-      - name: 이미지 업로드
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/cicd-demo:testbed-${{ github.sha }}
+      - name: 소스코드 빌드
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+          ./gradlew jib -Djib.to.tags=${{ steps.deploy_env.outputs.image_tag }},${{ steps.deploy_env.outputs.deploy_stage }}
