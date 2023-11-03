@@ -52,4 +52,4 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build
-          ./gradlew jib -Djib.to.tags=${{ steps.deploy_env.outputs.image_tag }},${{ steps.deploy_env.outputs.deploy_stage }}
+          ./gradlew jib -Djib.to.tags=${{ github.sha }}
