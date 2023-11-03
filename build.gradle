@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.5'
 	id 'io.spring.dependency-management' version '1.1.3'
-	id("com.google.cloud.tools.jib") version "3.4.0"
+	id 'com.google.cloud.tools.jib' version '3.3.1'
 }
 
 group = 'com.example'
@@ -33,11 +33,11 @@ jib {
 		}
 	}
 	to {
-		image = "197966029048.dkr.ecr.ap-northeast-2.amazonaws.com/prep-backend"
+		image = "301591718339.dkr.ecr.ap-northeast-2.amazonaws.com/cicd-demo"
 	}
 	container {
-		jvmFlags = listOf("-XX:+UseContainerSupport", "-Duser.timezone=UTC")
-		ports = listOf("8080")
+		jvmFlags = ['-XX:+UseContainerSupport', '-Duser.timezone=UTC']
+		ports = ['38081']
 		creationTime = "USE_CURRENT_TIMESTAMP"
 	}
 }
