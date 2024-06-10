@@ -52,7 +52,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/cicd-demo:testbed-${{ github.sha }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/cicd-demo:test-${{ github.sha }}
 
   argocd:
     needs: [build]
@@ -68,7 +68,7 @@ jobs:
       - name: 아르고 CD 레포지토리 이미지 태그 변경 사항 업데이트
         working-directory: .argocd-repo
         run: |
-          yq -i '.deploy.test.imageTag = "testbed-${{ github.sha }}"' deploy/test/values.yaml
+          yq -i '.deploy.test.imageTag = "test-${{ github.sha }}"' deploy/test/values.yaml
 
           git config --local user.name "daniel kim"
           git config --local user.email "kimdongha15@gmail.com"
